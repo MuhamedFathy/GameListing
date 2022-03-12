@@ -40,6 +40,7 @@ ext {
   navigationKTXVersion = '2.4.1'
   liveDataKTXVersion = '2.4.1'
   viewModelKTXVersion = '2.4.1'
+  roomVersion = '2.4.2'
   pagingVersion = '3.1.1'
 
   // UI

@@ -50,9 +50,14 @@ dependencies {
   testImplementation "org.mockito:mockito-inline:$mockitoVersion"
   testImplementation "com.nhaarman:mockito-kotlin:$mockitoKotlinVersion"
   testImplementation "com.squareup.okhttp3:mockwebserver:$mockWebServerVersion"
+  testImplementation "androidx.room:room-testing:$roomVersion"
 
   // AndroidX
   implementation "androidx.core:core-ktx:$ktxVersion"
+  implementation "androidx.room:room-runtime:$roomVersion"
+  kapt "androidx.room:room-compiler:$roomVersion"
+  implementation "androidx.room:room-ktx:$roomVersion"
+  implementation "androidx.room:room-rxjava2:$roomVersion"
   implementation "androidx.paging:paging-runtime:$pagingVersion"
   implementation "androidx.paging:paging-rxjava2:$pagingVersion"
 
