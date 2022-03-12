@@ -8,11 +8,13 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.github.gamelisting.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Authored by Mohamed Fathy on 12 Mar, 2022.
  * Contact: muhamed.gendy@gmail.com
  */
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
   private lateinit var appBarConfiguration: AppBarConfiguration
