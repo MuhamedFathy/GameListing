@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/nav_graph"
+  app:startDestination="@id/games_fragment">
+
+  <fragment
+    android:id="@+id/games_fragment"
+    android:name="com.github.gamelisting.GamesFragment"
+    tools:layout="@layout/fragment_games">
+    <action
+      android:id="@+id/show_game_details"
+      app:destination="@id/game_details_fragment"
+      app:enterAnim="@anim/slide_in_left"
+      app:exitAnim="@anim/slide_out_right"
+      app:popEnterAnim="@anim/slide_in_left"
+      app:popExitAnim="@anim/slide_out_right" />
+  </fragment>
+  <fragment
+    android:id="@+id/game_details_fragment"
+    android:name="com.github.gamelisting.GameDetailsFragment"
+    tools:layout="@layout/fragment_game_details">
+    <argument
+      android:name="game_id"
+      app:argType="long" />
+  </fragment>
+</navigation>
