@@ -1,4 +1,10 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+  dependencies {
+    classpath "com.google.dagger:hilt-android-gradle-plugin:2.38.1"
+  }
+}
+
 plugins {
   id 'com.android.application' version '7.1.2' apply false
   id 'com.android.library' version '7.1.2' apply false
@@ -7,4 +13,55 @@ plugins {
 
 task clean(type: Delete) {
   delete rootProject.buildDir
+}
+
+ext {
+  // Basic
+  compileSdkVersion = 31
+  minSdkVersion = 23
+  targetSdkVersion = 31
+
+  //Test
+  junitVersion = '4.13.2'
+  archTestVersion = '2.1.0'
+  junitAndroidxVersion = '1.1.3'
+  espressoVersion = '3.4.0'
+  mockitoVersion = '3.10.0'
+  mockitoKotlinVersion = '1.6.0'
+  mockWebServerVersion = '4.9.3'
+
+  // AndroidX
+  ktxVersion = '1.7.0'
+  appcompatVersion = '1.4.1'
+  materialVersion = '1.5.0'
+  constraintVersion = '2.1.3'
+  refreshLayoutVersion = '1.1.0'
+  fragmentKTXVersion = '2.4.1'
+  navigationKTXVersion = '2.4.1'
+  liveDataKTXVersion = '2.4.1'
+  viewModelKTXVersion = '2.4.1'
+  pagingVersion = '3.1.1'
+
+  // UI
+  shimmerVersion = '0.5.0'
+  circleImageViewVersion = '3.1.0'
+
+  // Dagger2
+  hiltVersion = '2.38.1'
+  androidXHiltLifecycleVersion = '1.0.0-alpha03'
+  androidXHiltCompilerVersion = '1.0.0-alpha03'
+
+  // Rx
+  rxKotlinVersion = '2.4.0'
+  rxAndroidVersion = '2.1.1'
+
+  // Network
+  retrofitVersion = '2.9.0'
+  okHttpVersion = '4.9.3'
+
+  // Image loading
+  glideVersion = '4.12.0'
+
+  // Logging
+  timberVersion = '4.7.1'
 }

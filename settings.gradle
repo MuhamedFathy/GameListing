@@ -13,4 +13,7 @@ dependencyResolutionManagement {
   }
 }
 rootProject.name = "Game Listing"
-include ':app'
+include ':presentation'
+include ':domain'
+include ':data'
+include ':core'
