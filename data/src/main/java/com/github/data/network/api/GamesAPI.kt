@@ -25,7 +25,3 @@ interface GamesAPI {
     @Path("id") gameId: Long
   ): Single<Response<GameDetailsResponse>>
 }
-
-enum class GamesPlatforms(val value: Int) {
-  PLAY_STATION_4(18), XBOX_ONE(1)
-}

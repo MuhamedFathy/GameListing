@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
  * Contact: muhamed.gendy@gmail.com
  */
 @Entity(tableName = "games")
-data class GamesDbEntity(
+data class GameDbEntity(
   @PrimaryKey(autoGenerate = false) val id: Long,
   val slug: String?,
   val name: String?,

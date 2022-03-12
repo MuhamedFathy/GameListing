@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
  * Contact: muhamed.gendy@gmail.com
  */
 @Entity(tableName = "games_remote_keys")
-data class GamesDbRemoteKeysEntity(
+data class GameDbRemoteKeysEntity(
   @PrimaryKey(autoGenerate = false) val id: Long,
   val prevKey: Int?,
   val nextKey: Int?

@@ -5,8 +5,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.Companion.REPLACE
 import androidx.room.Query
-import com.github.data.source.locale.entity.GamesDbEntity
-import com.github.data.source.locale.entity.GamesDbRemoteKeysEntity
+import com.github.data.source.locale.entity.GameDbEntity
+import com.github.data.source.locale.entity.GameDbRemoteKeysEntity
 
 /**
  * Authored by Mohamed Fathy on 12 Mar, 2022.
@@ -15,9 +15,9 @@ import com.github.data.source.locale.entity.GamesDbRemoteKeysEntity
 @Dao
 interface GamesDao {
 
-  @Insert(onConflict = REPLACE) fun insertAll(games: List<GamesDbEntity>)
+  @Insert(onConflict = REPLACE) fun insertAll(games: List<GameDbEntity>)
 
-  @Query("SELECT * FROM games") fun selectAll(): PagingSource<Int, GamesDbEntity>
+  @Query("SELECT * FROM games") fun selectAll(): PagingSource<Int, GameDbEntity>
 
   @Query("DELETE FROM games") fun clearAll()
 }
@@ -25,9 +25,9 @@ interface GamesDao {
 @Dao
 interface GamesRemoteKeysDao {
 
-  @Insert(onConflict = REPLACE) fun insertAll(remoteKeys: List<GamesDbRemoteKeysEntity>)
+  @Insert(onConflict = REPLACE) fun insertAll(remoteKeys: List<GameDbRemoteKeysEntity>)
 
-  @Query("SELECT * FROM games_remote_keys WHERE id = :gameId") fun remoteKeyByGameId(gameId: Long): GamesDbRemoteKeysEntity?
+  @Query("SELECT * FROM games_remote_keys WHERE id = :gameId") fun remoteKeyByGameId(gameId: Long): GameDbRemoteKeysEntity?
 
   @Query("DELETE FROM games_remote_keys") fun clearRemoteKeys()
 }
