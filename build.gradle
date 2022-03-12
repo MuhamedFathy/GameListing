@@ -41,11 +41,8 @@ ext {
   liveDataKTXVersion = '2.4.1'
   viewModelKTXVersion = '2.4.1'
   roomVersion = '2.4.2'
+  roomPagingVersion = '2.5.0-alpha01'
   pagingVersion = '3.1.1'
-
-  // UI
-  shimmerVersion = '0.5.0'
-  circleImageViewVersion = '3.1.0'
 
   // Dagger2
   hiltVersion = '2.38.1'

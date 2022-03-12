@@ -68,10 +68,6 @@ dependencies {
   implementation "androidx.navigation:navigation-fragment-ktx:$liveDataKTXVersion"
   implementation "androidx.navigation:navigation-ui-ktx:$viewModelKTXVersion"
 
-  // UI
-  implementation "com.facebook.shimmer:shimmer:$shimmerVersion"
-  implementation "de.hdodenhof:circleimageview:$circleImageViewVersion"
-
   //dagger
   implementation "com.google.dagger:hilt-android:$hiltVersion"
   kapt "com.google.dagger:hilt-compiler:$hiltVersion"

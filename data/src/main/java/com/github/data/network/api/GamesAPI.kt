@@ -17,7 +17,8 @@ interface GamesAPI {
   @GET("games") fun getGames(
     @Query("page") pageNumber: Int,
     @Query("page_size") pageSize: Int,
-    @Query("platforms") platforms: Int
+    @Query("platforms") platforms: Int,
+    @Query("ordering") order: String = "-released"
   ): Single<Response<GamesResponse>>
 
   @GET("games/{id}") fun getGameDetails(
