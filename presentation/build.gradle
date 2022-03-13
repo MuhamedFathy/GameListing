@@ -67,6 +67,8 @@ dependencies {
   implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$navigationKTXVersion"
   implementation "androidx.navigation:navigation-fragment-ktx:$liveDataKTXVersion"
   implementation "androidx.navigation:navigation-ui-ktx:$viewModelKTXVersion"
+  implementation "androidx.paging:paging-runtime:$pagingVersion"
+  implementation "androidx.paging:paging-rxjava2:$pagingVersion"
 
   //dagger
   implementation "com.google.dagger:hilt-android:$hiltVersion"

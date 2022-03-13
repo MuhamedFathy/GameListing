@@ -22,4 +22,9 @@
   <style name="Theme.GameListing.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
   <style name="Theme.GameListing.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+  <style name="CollapsingToolbarExpandedTextStyle" parent="Widget.AppCompat.TextView">
+    <item name="android:textSize">0.1sp</item>
+    <item name="android:textColor">@android:color/transparent</item>
+  </style>
 </resources>
