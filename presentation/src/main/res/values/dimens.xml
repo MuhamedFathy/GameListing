@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <dimen name="fab_margin">16dp</dimen>
-  <dimen name="item_width">400dp</dimen>
+  <dimen name="guide_line_begin">300dp</dimen>
   <dimen name="app_bar_height">400dp</dimen>
-  <dimen name="text_margin">16dp</dimen>
-  <dimen name="container_margin">8dp</dimen>
-  <dimen name="container_horizontal_margin">16dp</dimen>
+  <dimen name="grid_item_width">280dp</dimen>
 </resources>
