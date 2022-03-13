@@ -1,4 +1,4 @@
-package com.github.gamelisting
+package com.github.gamelisting.features.details
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -27,6 +27,7 @@ class GameDetailsFragment : Fragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+    binding.itemDetail?.text = gameId.toString()
   }
 
   override fun onDestroyView() {

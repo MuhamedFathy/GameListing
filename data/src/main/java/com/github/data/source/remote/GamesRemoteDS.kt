@@ -14,7 +14,7 @@ class GamesRemoteDS @Inject constructor(
   private val gamesAPI: GamesAPI
 ) {
 
-  fun getGames(pageNumber: Int, pageSize: Int = 20, platform: GamesPlatforms): Single<List<Result>> {
+  fun getGames(pageNumber: Int, pageSize: Int = 40, platform: GamesPlatforms): Single<List<Result>> {
     return gamesAPI.getGames(pageNumber, pageSize, platform.value)
       .parseResponse()
       .map { it.results ?: emptyList() }

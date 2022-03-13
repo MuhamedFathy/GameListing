@@ -1,3 +1,7 @@
 <resources>
   <string name="app_name">Game Listing</string>
+  <string name="home_screen_title">Console Games</string>
+  <string name="error_view_message_title">Something went wrong..</string>
+  <string name="error_view_message_subtitle">An serious emergency case is blocking your entertainment.</string>
+  <string name="error_view_retry_button">Retry</string>
 </resources>

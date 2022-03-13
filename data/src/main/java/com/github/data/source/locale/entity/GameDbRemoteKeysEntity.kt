@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
  */
 @Entity(tableName = "games_remote_keys")
 data class GameDbRemoteKeysEntity(
-  @PrimaryKey(autoGenerate = false) val id: Long,
+  @PrimaryKey val id: Long,
   val prevKey: Int?,
   val nextKey: Int?
 )

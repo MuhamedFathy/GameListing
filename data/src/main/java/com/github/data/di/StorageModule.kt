@@ -1,6 +1,6 @@
 package com.github.data.di
 
-import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import com.github.data.source.locale.GamesDatabase
 import dagger.Module
@@ -20,6 +20,8 @@ class StorageModule {
 
   @Singleton
   @Provides fun provideGamesDatabase(
-    @ApplicationContext context: Application
-  ) = Room.databaseBuilder(context, GamesDatabase::class.java, "games_rawg").build()
+    @ApplicationContext context: Context
+  ) = Room.databaseBuilder(context, GamesDatabase::class.java, "games.db")
+    .fallbackToDestructiveMigration()
+    .build()
 }
