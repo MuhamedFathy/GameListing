@@ -32,7 +32,6 @@ android {
 
 dependencies {
 
-
   // Test
   testImplementation "junit:junit:$junitVersion"
   androidTestImplementation "androidx.test.ext:junit:$junitAndroidxVersion"
@@ -44,6 +43,13 @@ dependencies {
 
   // AndroidX
   implementation "androidx.core:core-ktx:$ktxVersion"
+  implementation "androidx.room:room-runtime:$roomVersion"
+  kapt "androidx.room:room-compiler:$roomVersion"
+  implementation "androidx.room:room-ktx:$roomVersion"
+  implementation "androidx.room:room-rxjava2:$roomVersion"
+  implementation "androidx.room:room-paging:$roomPagingVersion"
+  implementation "androidx.paging:paging-runtime:$pagingVersion"
+  implementation "androidx.paging:paging-rxjava2:$pagingVersion"
 
   //dagger
   implementation "com.google.dagger:hilt-android:$hiltVersion"

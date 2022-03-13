@@ -7,6 +7,7 @@ import androidx.paging.LoadType.PREPEND
 import androidx.paging.LoadType.REFRESH
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxRemoteMediator
+import com.github.data.model.Result
 import com.github.data.source.locale.GamesDatabase
 import com.github.data.source.locale.entity.GameDbEntity
 import com.github.data.source.locale.entity.GameDbRemoteKeysEntity
@@ -79,17 +80,22 @@ class GamesRxRemoteMediator @Inject constructor(
     return if (page == INVALID_PAGE) {
       Single.just(MediatorResult.Success(endOfPaginationReached = true))
     } else {
-      gamesRemoteDS.getGames(page, platform = PLAY_STATION_4)
-        .zipWith(gamesRemoteDS.getGames(page, platform = XBOX_ONE)) { psGames, xboxGames ->
-          val mutablePSGames = psGames.toMutableList()
-          mutablePSGames.addAll(xboxGames)
-          mutablePSGames.toList().map { it.toDbEntity() }
-        }.map { insertToDatabase(page, endOfPagination = it.count() < state.config.pageSize, loadType, it) }
-        .map { MediatorResult.Success(endOfPaginationReached = it.count() < state.config.pageSize) }
+      gamesRemoteDS.getGames(page, state.config.pageSize, platform = PLAY_STATION_4)
+        .zipWith(gamesRemoteDS.getGames(page, state.config.pageSize, platform = XBOX_ONE)) { psGames, xboxGames -> collectList2(psGames, xboxGames) }
+        .map { insertToDatabase(page, endOfPagination = it.isEmpty(), loadType, it) }
+        .map<MediatorResult> { endOfPagination -> MediatorResult.Success(endOfPaginationReached = endOfPagination) }
+        .onErrorReturn { MediatorResult.Error(it) }
     }
   }
 
-  private fun insertToDatabase(page: Int, endOfPagination: Boolean, loadType: LoadType, games: List<GameDbEntity>): List<GameDbEntity> {
+  private fun collectList2(psGames: List<Result>, xboxGames: List<Result>): List<GameDbEntity> {
+    val mutablePSEntityGames = psGames.map { it.toDbEntity() }.toMutableList()
+    val xboxEntityGames = xboxGames.map { it.toDbEntity() }
+    mutablePSEntityGames.addAll(xboxEntityGames)
+    return mutablePSEntityGames.distinctBy { it.id }.filter { it.backgroundImage.isNotBlank() }.sortedByDescending { it.released }
+  }
+
+  private fun insertToDatabase(page: Int, endOfPagination: Boolean, loadType: LoadType, games: List<GameDbEntity>): Boolean {
     gamesDatabase.runInTransaction {
       if (loadType == REFRESH) {
         gamesDatabase.gamesRemoteKeysDao().clearRemoteKeys()
@@ -103,6 +109,6 @@ class GamesRxRemoteMediator @Inject constructor(
       gamesDatabase.gamesRemoteKeysDao().insertAll(keys)
       gamesDatabase.gamesDao().insertAll(games)
     }
-    return games
+    return endOfPagination
   }
 }
