@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:paddingHorizontal="12dp"
+  android:paddingVertical="16dp">
+
+  <androidx.appcompat.widget.AppCompatTextView
+    android:id="@+id/gameDetailsNameTextView"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:autoLink="web|email"
+    android:fontFamily="@font/maven_pro_bold"
+    android:gravity="start"
+    android:textColor="?colorOnSecondary"
+    android:textSize="18sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:text="Call of duty" />
+
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/gameDetailsRatingsRecycler"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:nestedScrollingEnabled="false"
+    android:orientation="vertical"
+    android:visibility="visible"
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/gameDetailsNameTextView" />
+
+  <androidx.appcompat.widget.AppCompatTextView
+    android:id="@+id/gameDetailsDescriptionTitleTextView"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:fontFamily="@font/maven_pro_semi_bold"
+    android:gravity="start"
+    android:text="@string/game_details_description_title"
+    android:textColor="?colorOnSecondary"
+    android:textSize="14sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/gameDetailsRatingsRecycler" />
+
+  <androidx.appcompat.widget.AppCompatTextView
+    android:id="@+id/gameDetailsDescriptionTextView"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:autoLink="web|email"
+    android:fontFamily="@font/maven_pro_regular"
+    android:gravity="start"
+    android:textColor="?colorOnSecondary"
+    android:textSize="16sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/gameDetailsDescriptionTitleTextView"
+    tools:text="bla bla bla bla" />
+
+  <androidx.appcompat.widget.AppCompatTextView
+    android:id="@+id/gameDetailsGenreTitleTextView"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="6dp"
+    android:fontFamily="@font/maven_pro_semi_bold"
+    android:gravity="start"
+    android:text="@string/game_details_genre_title"
+    android:textColor="?colorOnSecondary"
+    android:textSize="14sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/gameDetailsDescriptionTextView" />
+
+  <androidx.appcompat.widget.AppCompatTextView
+    android:id="@+id/gameDetailsGenreTextView"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:autoLink="web|email"
+    android:fontFamily="@font/maven_pro_regular"
+    android:gravity="start"
+    android:textColor="?colorOnSecondary"
+    android:textSize="16sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/gameDetailsGenreTitleTextView"
+    tools:text="Action, Adventure" />
+</androidx.constraintlayout.widget.ConstraintLayout>

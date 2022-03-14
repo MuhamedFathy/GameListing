@@ -7,6 +7,7 @@ import androidx.paging.LoadType.PREPEND
 import androidx.paging.LoadType.REFRESH
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxRemoteMediator
+import com.github.data.di.qualifier.IOThread
 import com.github.data.model.Result
 import com.github.data.source.locale.GamesDatabase
 import com.github.data.source.locale.entity.GameDbEntity
@@ -14,8 +15,8 @@ import com.github.data.source.locale.entity.GameDbRemoteKeysEntity
 import com.github.data.source.locale.toDbEntity
 import com.github.data.source.remote.GamesPlatforms.PLAY_STATION_4
 import com.github.data.source.remote.GamesPlatforms.XBOX_ONE
+import io.reactivex.Scheduler
 import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
 import java.io.InvalidObjectException
 import javax.inject.Inject
 
@@ -29,12 +30,13 @@ private const val INVALID_PAGE = -1
 @ExperimentalPagingApi
 class GamesRxRemoteMediator @Inject constructor(
   private val gamesRemoteDS: GamesRemoteDS,
-  private val gamesDatabase: GamesDatabase
+  private val gamesDatabase: GamesDatabase,
+  @IOThread private val ioThread: Scheduler
 ) : RxRemoteMediator<Int, GameDbEntity>() {
 
   override fun loadSingle(loadType: LoadType, state: PagingState<Int, GameDbEntity>): Single<MediatorResult> {
     return Single.just(loadType)
-      .subscribeOn(Schedulers.io())
+      .subscribeOn(ioThread)
       .map { toReturnPageNumber(loadType, state) }
       .flatMap { toRequestNetworkDataAndSaveToLocale(it, loadType, state) }
       .onErrorReturn { MediatorResult.Error(throwable = it) }
