@@ -8,6 +8,7 @@ data class GameEntity(
   val id: Long,
   val slug: String,
   val name: String,
+  val description: String = "",
   val released: String,
   val backgroundImage: String,
   val rating: Double,
@@ -18,19 +19,19 @@ data class GameEntity(
 )
 
 data class RatingEntity(
-  val id: Long?,
-  val title: String?,
-  val count: Long?,
-  val percent: Double?
+  val id: Long,
+  val title: String,
+  val count: Long,
+  val percent: Double
 )
 
 data class ScreenshotEntity(
-  val id: Long?,
-  val image: String?
+  val id: Long,
+  val image: String
 )
 
 data class GenreEntity(
-  val id: Long?,
-  val name: String?,
-  val slug: String?
+  val id: Long,
+  val name: String,
+  val slug: String
 )
