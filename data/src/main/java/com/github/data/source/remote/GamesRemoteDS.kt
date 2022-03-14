@@ -1,6 +1,7 @@
 package com.github.data.source.remote
 
 import com.github.data.extensions.parseResponse
+import com.github.data.model.GameDetailsResponse
 import com.github.data.model.Result
 import com.github.data.network.api.GamesAPI
 import io.reactivex.Single
@@ -18,6 +19,11 @@ class GamesRemoteDS @Inject constructor(
     return gamesAPI.getGames(pageNumber, pageSize, platform.value)
       .parseResponse()
       .map { it.results ?: emptyList() }
+  }
+
+  fun getGameDetails(gameId: Long): Single<GameDetailsResponse> {
+    return gamesAPI.getGameDetails(gameId)
+      .parseResponse()
   }
 }
 

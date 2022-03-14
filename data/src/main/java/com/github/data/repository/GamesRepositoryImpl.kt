@@ -6,8 +6,10 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.rxjava2.flowable
 import androidx.paging.rxjava2.mapAsync
+import com.github.data.model.mappers.toEntity
 import com.github.data.source.locale.GamesDatabase
 import com.github.data.source.locale.toEntity
+import com.github.data.source.remote.GamesRemoteDS
 import com.github.data.source.remote.GamesRxRemoteMediator
 import com.github.domain.entity.GameEntity
 import com.github.domain.repository.GamesRepository
@@ -22,6 +24,7 @@ import javax.inject.Inject
 @ExperimentalPagingApi
 class GamesRepositoryImpl @Inject constructor(
   private val gamesRxRemoteMediator: GamesRxRemoteMediator,
+  private val gamesRemoteDS: GamesRemoteDS,
   private val database: GamesDatabase
 ) : GamesRepository {
 
@@ -37,5 +40,13 @@ class GamesRepositoryImpl @Inject constructor(
       pagingSourceFactory = { database.gamesDao().selectAll() }
     ).flowable
       .map { it.mapAsync { gameDbEntity -> Single.just(gameDbEntity.toEntity()) } }
+  }
+
+  override fun getGamDetails(gameId: Long): Single<GameEntity> {
+    return gamesRemoteDS.getGameDetails(gameId)
+      .map { gameDetailsResponse ->
+        val gameDbEntity = database.gamesDao().select(gameId)
+        gameDetailsResponse.toEntity(gameDbEntity?.screenshots?.map { it.toEntity() } ?: emptyList())
+      }
   }
 }
