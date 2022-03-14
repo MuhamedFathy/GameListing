@@ -4,10 +4,11 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+  android:background="?android:colorBackground"
   tools:ignore="MissingDefaultResource">
 
   <androidx.appcompat.widget.AppCompatImageView
-    android:layout_width="wrap_content"
+    android:layout_width="240dp"
     android:layout_height="280dp"
     android:layout_marginBottom="20dp"
     android:scaleType="centerInside"
@@ -25,7 +26,7 @@
     android:gravity="center"
     android:text="@string/empty_view_message_title"
     android:textColor="?colorOnSecondary"
-    android:textSize="28sp"
+    android:textSize="24sp"
     app:layout_constraintBottom_toTopOf="@+id/guideline2"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent" />

@@ -51,6 +51,10 @@ class GameDetailsFragment : Fragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+    if (gameId == 0L) {
+      binding.gameDetailsEmptyView?.root?.isVisible = true
+      return
+    }
     setupToolbar()
     setupClickListeners()
     setupPager()
@@ -83,11 +87,11 @@ class GameDetailsFragment : Fragment() {
   }
 
   private fun setupClickListeners() {
-    binding.gamesErrorInclude?.errorViewRetryButton?.setOnClickListener { viewModel.loadGameDetails(gameId) }
+    binding.gamesErrorInclude.errorViewRetryButton.setOnClickListener { viewModel.loadGameDetails(gameId) }
   }
 
   private fun setupPager() {
-    binding.gameDetailsImagesViewPager?.apply {
+    binding.gameDetailsImagesViewPager.apply {
       adapter = screenshotsPagerAdapter
       (getChildAt(0) as? RecyclerView)?.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
       (getChildAt(0) as? RecyclerView)?.itemAnimator = null
@@ -95,7 +99,7 @@ class GameDetailsFragment : Fragment() {
   }
 
   private fun setupRatingRecyclerView() {
-    binding.gameDetailsMainInclude?.gameDetailsRatingsRecycler?.adapter = ratingsAdapter
+    binding.gameDetailsMainInclude.gameDetailsRatingsRecycler.adapter = ratingsAdapter
   }
 
   private fun observeData() {
@@ -109,25 +113,25 @@ class GameDetailsFragment : Fragment() {
   }
 
   private fun updateUIWithLoading() {
-    binding.gamesErrorInclude?.root?.isVisible = false
-    binding.gameLoadingFrameLayout?.isVisible = true
+    binding.gamesErrorInclude.root.isVisible = false
+    binding.gameLoadingFrameLayout.isVisible = true
   }
 
   private fun updateUI(gameDetails: GameDetailsUIModel) {
     with(gameDetails) {
-      binding.gameLoadingFrameLayout?.isVisible = false
+      binding.gameLoadingFrameLayout.isVisible = false
       binding.gameDetailsToolbarTitle?.text = name
       screenshotsPagerAdapter.setData(screenshots)
-      binding.gameDetailsMainInclude?.gameDetailsNameTextView?.text = name
-      if (ratings.isNotEmpty()) ratingsAdapter.setData(ratings) else binding.gameDetailsMainInclude?.gameDetailsRatingsRecycler?.isVisible = false
-      binding.gameDetailsMainInclude?.gameDetailsDescriptionTextView?.text = HtmlCompat.fromHtml(description, FROM_HTML_MODE_COMPACT)
-      binding.gameDetailsMainInclude?.gameDetailsGenreTextView?.text = genres
+      binding.gameDetailsMainInclude.gameDetailsNameTextView.text = name
+      if (ratings.isNotEmpty()) ratingsAdapter.setData(ratings) else binding.gameDetailsMainInclude.gameDetailsRatingsRecycler.isVisible = false
+      binding.gameDetailsMainInclude.gameDetailsDescriptionTextView.text = HtmlCompat.fromHtml(description, FROM_HTML_MODE_COMPACT)
+      binding.gameDetailsMainInclude.gameDetailsGenreTextView.text = genres
     }
   }
 
   private fun updateUIWithError() {
-    binding.gamesErrorInclude?.root?.isVisible = true
-    binding.gameLoadingFrameLayout?.isVisible = false
+    binding.gamesErrorInclude.root.isVisible = true
+    binding.gameLoadingFrameLayout.isVisible = false
   }
 
   override fun onDestroyView() {
