@@ -10,7 +10,7 @@ import androidx.paging.rxjava2.cachedIn
 import com.github.core.extensions.log
 import com.github.domain.interactor.GetGamesUseCase
 import com.github.gamelisting.features.main.viewmodel.uimodel.GameUIModel
-import com.github.gamelisting.features.main.viewmodel.uimodel.toUIModel
+import com.github.gamelisting.features.main.viewmodel.uimodel.toGameUIModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -35,7 +35,7 @@ class GamesViewModel @Inject constructor(
   private fun loadGames() {
     getGamesUseCase.build()
       .cachedIn(viewModelScope)
-      .subscribe({ gamePagingData -> _gamesLiveData.value = gamePagingData.map { it.toUIModel() } }, { it.log() })
+      .subscribe({ gamePagingData -> _gamesLiveData.value = gamePagingData.map { it.toGameUIModel() } }, { it.log() })
       .addTo(compositeDisposable)
   }
 

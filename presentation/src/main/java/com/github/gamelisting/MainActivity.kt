@@ -12,20 +12,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-//  private lateinit var appBarConfiguration: AppBarConfiguration
-
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(ActivityMainBinding.inflate(layoutInflater).root)
-
-//    val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_game_details) as NavHostFragment
-//    val navController = navHostFragment.navController
-//    appBarConfiguration = AppBarConfiguration(navController.graph)
-//    setupActionBarWithNavController(navController, appBarConfiguration)
   }
-
-//  override fun onSupportNavigateUp(): Boolean {
-//    val navController = findNavController(R.id.nav_host_fragment_game_details)
-//    return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-//  }
 }

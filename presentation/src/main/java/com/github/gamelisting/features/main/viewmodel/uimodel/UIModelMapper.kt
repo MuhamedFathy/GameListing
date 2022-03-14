@@ -7,7 +7,7 @@ import com.github.domain.entity.GameEntity
  * Contact: muhamed.gendy@gmail.com
  */
 
-fun GameEntity.toUIModel() = GameUIModel(
+fun GameEntity.toGameUIModel() = GameUIModel(
   id = id,
   name = name,
   poster = backgroundImage,
