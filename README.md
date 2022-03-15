@@ -7,6 +7,7 @@ Games listing app that list console games from [rawg.io](https://rawg.io) and st
 * ### Phone:
 
 <p float="left" align="center">
+<img src="/screenshots/phone_demo.jpg" width="40%"/>
 <img src="/screenshots/phone_demo.gif" width="40%"/>
 </p>
 
