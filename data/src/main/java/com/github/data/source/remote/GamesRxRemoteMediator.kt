@@ -25,6 +25,7 @@ import javax.inject.Inject
  * Contact: muhamed.gendy@gmail.com
  */
 
+private const val INITIAL_PAGE_NUMBER = 1
 private const val INVALID_PAGE = -1
 
 @ExperimentalPagingApi
@@ -47,7 +48,7 @@ class GamesRxRemoteMediator @Inject constructor(
     return when (loadType) {
       REFRESH -> {
         remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
-        remoteKeys?.nextKey?.minus(1) ?: 1
+        remoteKeys?.nextKey?.minus(1) ?: INITIAL_PAGE_NUMBER
       }
       PREPEND -> {
         remoteKeys = getRemoteKeyForFirstItem(state) ?: throw InvalidObjectException("Room remote key for first item == null")
@@ -83,28 +84,29 @@ class GamesRxRemoteMediator @Inject constructor(
       Single.just(MediatorResult.Success(endOfPaginationReached = true))
     } else {
       gamesRemoteDS.getGames(page, state.config.pageSize, platform = PLAY_STATION_4)
-        .zipWith(gamesRemoteDS.getGames(page, state.config.pageSize, platform = XBOX_ONE)) { psGames, xboxGames -> collectList2(psGames, xboxGames) }
-        .map { insertToDatabase(page, endOfPagination = it.isEmpty(), loadType, it) }
+        .zipWith(gamesRemoteDS.getGames(page, state.config.pageSize, platform = XBOX_ONE)) { ps, xbox -> mergeListsIntoOne(ps, xbox) }
+        .map { insertToDatabase(page, loadType, it) }
         .map<MediatorResult> { endOfPagination -> MediatorResult.Success(endOfPaginationReached = endOfPagination) }
         .onErrorReturn { MediatorResult.Error(it) }
     }
   }
 
-  private fun collectList2(psGames: List<Result>, xboxGames: List<Result>): List<GameDbEntity> {
+  private fun mergeListsIntoOne(psGames: List<Result>, xboxGames: List<Result>): List<GameDbEntity> {
     val mutablePSEntityGames = psGames.map { it.toDbEntity() }.toMutableList()
     val xboxEntityGames = xboxGames.map { it.toDbEntity() }
     mutablePSEntityGames.addAll(xboxEntityGames)
     return mutablePSEntityGames.distinctBy { it.id }.filter { it.backgroundImage.isNotBlank() }.sortedByDescending { it.released }
   }
 
-  private fun insertToDatabase(page: Int, endOfPagination: Boolean, loadType: LoadType, games: List<GameDbEntity>): Boolean {
+  private fun insertToDatabase(page: Int, loadType: LoadType, games: List<GameDbEntity>): Boolean {
+    val endOfPagination = games.isEmpty()
     gamesDatabase.runInTransaction {
       if (loadType == REFRESH) {
         gamesDatabase.gamesRemoteKeysDao().clearRemoteKeys()
         gamesDatabase.gamesDao().clearAll()
       }
 
-      val prevKey = if (page == 1) null else page.minus(1)
+      val prevKey = if (page == INITIAL_PAGE_NUMBER) null else page.minus(1)
       val nextKey = if (endOfPagination) null else page.plus(1)
 
       val keys = games.map { GameDbRemoteKeysEntity(id = it.id, prevKey = prevKey, nextKey = nextKey) }

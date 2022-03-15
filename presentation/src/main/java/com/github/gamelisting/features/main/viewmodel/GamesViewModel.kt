@@ -30,7 +30,11 @@ class GamesViewModel @Inject constructor(
   private val compositeDisposable = CompositeDisposable()
 
   private val _gamesLiveData = MutableLiveData<PagingData<GameUIModel>>()
-  val gamesLiveData: LiveData<PagingData<GameUIModel>> = _gamesLiveData.also { loadGames() }
+  val gamesLiveData: LiveData<PagingData<GameUIModel>> = _gamesLiveData
+
+  init {
+    loadGames()
+  }
 
   private fun loadGames() {
     getGamesUseCase.build()

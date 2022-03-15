@@ -1,6 +1,5 @@
 package com.github.data.di
 
-import com.github.data.BuildConfig
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -28,7 +27,7 @@ class NetworkModule {
     client: OkHttpClient,
     gson: Gson,
   ): Retrofit = Retrofit.Builder()
-    .baseUrl(BuildConfig.BASE_URL)
+    .baseUrl("https://api.rawg.io/api/")
     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
     .addConverterFactory(GsonConverterFactory.create(gson))
     .client(client)

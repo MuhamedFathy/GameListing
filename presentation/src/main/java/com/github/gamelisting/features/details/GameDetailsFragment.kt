@@ -124,6 +124,7 @@ class GameDetailsFragment : Fragment() {
       screenshotsPagerAdapter.setData(screenshots)
       binding.gameDetailsMainInclude.gameDetailsNameTextView.text = name
       if (ratings.isNotEmpty()) ratingsAdapter.setData(ratings) else binding.gameDetailsMainInclude.gameDetailsRatingsRecycler.isVisible = false
+      binding.gameDetailsMainInclude.gameDetailsReleaseDateValueTextView.text = releaseDate
       binding.gameDetailsMainInclude.gameDetailsDescriptionTextView.text = HtmlCompat.fromHtml(description, FROM_HTML_MODE_COMPACT)
       binding.gameDetailsMainInclude.gameDetailsGenreTextView.text = genres
     }
