@@ -1,0 +1,88 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/item_detail_container"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+
+  <androidx.core.widget.NestedScrollView
+    android:id="@+id/gameDetailsNestedScrollView"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:clipToPadding="false"
+    android:overScrollMode="never"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingHorizontal="12dp"
+      android:paddingVertical="16dp">
+
+      <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/gameDetailsImagesViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:background="?colorOnPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <include
+        android:id="@+id/gameDetailsMainInclude"
+        layout="@layout/layout_game_details"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gameDetailsImagesViewPager" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.core.widget.NestedScrollView>
+
+  <include
+    android:id="@+id/gameDetailsEmptyView"
+    layout="@layout/layout_empty_view"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:visibility="gone"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <include
+    android:id="@+id/gamesErrorInclude"
+    layout="@layout/layout_error_view"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:translationZ="90dp"
+    android:visibility="gone"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <FrameLayout
+    android:id="@+id/gameLoadingFrameLayout"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:background="?android:colorBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:translationZ="90dp"
+    android:visibility="gone"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <ProgressBar
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:indeterminateTint="?colorOnSecondary" />
+  </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
