@@ -29,7 +29,12 @@ data class GameDbEntity(
   val dominantColor: String,
   val screenshots: List<ScreenshotDbEntity>,
   val genres: List<GenreDbEntity>
-)
+) : Comparable<GameDbEntity> {
+
+  override fun compareTo(other: GameDbEntity): Int {
+    return released.compareTo(other.released)
+  }
+}
 
 data class RatingDbEntity(
   val id: Long,

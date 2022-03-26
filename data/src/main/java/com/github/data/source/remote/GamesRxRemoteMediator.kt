@@ -9,6 +9,7 @@ import androidx.paging.PagingSource.LoadResult.Page
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxRemoteMediator
 import com.github.data.di.qualifier.IOThread
+import com.github.data.extensions.sort
 import com.github.data.model.Result
 import com.github.data.source.locale.GamesDatabase
 import com.github.data.source.locale.entity.GameDbEntity
@@ -87,27 +88,22 @@ class GamesRxRemoteMediator @Inject constructor(
       Single.just(MediatorResult.Success(endOfPaginationReached = true))
     } else {
       gamesRemoteDS.getGames(page, state.config.pageSize, platform = PLAY_STATION_4)
-        .zipWith(gamesRemoteDS.getGames(page, state.config.pageSize, platform = XBOX_ONE)) { ps, xbox ->
-          mergeListsToCurrentData(
-            ps,
-            xbox,
-            state.pages
-          )
-        }
+        .zipWith(gamesRemoteDS.getGames(page, state.config.pageSize, platform = XBOX_ONE)) { ps, xbox -> mergeToCurrentData(ps, xbox, state.pages) }
         .map { insertToDatabase(page, loadType, it) }
         .map<MediatorResult> { endOfPagination -> MediatorResult.Success(endOfPaginationReached = endOfPagination) }
         .onErrorReturn { MediatorResult.Error(it) }
     }
   }
 
-  private fun mergeListsToCurrentData(psGames: List<Result>, xboxGames: List<Result>, pages: List<Page<Int, GameDbEntity>>): List<GameDbEntity> {
-    val mergedGames = divideToChunks(
-      psGames.map { it.toDbEntity() }.plus(xboxGames.map { it.toDbEntity() })
-        .distinctBy { it.id }.filter { it.backgroundImage.isNotBlank() }
-    )
+  private fun mergeToCurrentData(psGames: List<Result>, xboxGames: List<Result>, pages: List<Page<Int, GameDbEntity>>): List<GameDbEntity> {
+    val mergedGames = psGames.map { it.toDbEntity() }
+      .plus(xboxGames.map { it.toDbEntity() })
+      .filter { it.backgroundImage.isNotBlank() }
+      .distinctBy { it.id }
+      .sort()
     oldGames.clear()
     pages.forEach { oldGames.plus(it.data) }
-    return divideToChunks(oldGames.plus(mergedGames)).distinctBy { it.id }
+    return oldGames.plus(mergedGames).sort().distinctBy { it.id }
   }
 
   private fun insertToDatabase(page: Int, loadType: LoadType, games: List<GameDbEntity>): Boolean {
@@ -126,40 +122,5 @@ class GamesRxRemoteMediator @Inject constructor(
       gamesDatabase.gamesDao().insertAll(games)
     }
     return endOfPagination
-  }
-
-  private fun divideToChunks(list: List<GameDbEntity>): List<GameDbEntity> {
-    if (list.count() <= 1) return list
-    val middle = list.count().div(2)
-    val left = list.subList(0, middle)
-    val right = list.subList(middle, list.count())
-    return merge(divideToChunks(left), divideToChunks(right))
-  }
-
-  private fun merge(left: List<GameDbEntity>, right: List<GameDbEntity>): List<GameDbEntity> {
-    var indexLeft = 0
-    var indexRight = 0
-    val newList = mutableListOf<GameDbEntity>()
-
-    while ((indexLeft < left.count()).and(indexRight < right.count())) {
-      if (left[indexLeft].released >= right[indexRight].released) {
-        newList.add(left[indexLeft])
-        indexLeft++
-      } else {
-        newList.add(right[indexRight])
-        indexRight++
-      }
-    }
-
-    while (indexLeft < left.count()) {
-      newList.add(left[indexLeft])
-      indexLeft++
-    }
-
-    while (indexRight < right.count()) {
-      newList.add(right[indexRight])
-      indexRight++
-    }
-    return newList
   }
 }
