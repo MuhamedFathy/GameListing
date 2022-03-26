@@ -1,6 +1,5 @@
 package com.github.gamelisting.features.main
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -51,7 +50,6 @@ class GamesAdapter @Inject constructor() : PagingDataAdapter<GameUIModel, GameVi
 
   inner class GameViewHolder(val binding: ItemGameBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    @SuppressLint("SetTextI18n")
     fun bind(game: GameUIModel) {
       with(game) {
         binding.itemImageNameTextView.text = name

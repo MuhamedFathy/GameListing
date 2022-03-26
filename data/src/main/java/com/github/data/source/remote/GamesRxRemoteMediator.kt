@@ -5,9 +5,11 @@ import androidx.paging.LoadType
 import androidx.paging.LoadType.APPEND
 import androidx.paging.LoadType.PREPEND
 import androidx.paging.LoadType.REFRESH
+import androidx.paging.PagingSource.LoadResult.Page
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxRemoteMediator
 import com.github.data.di.qualifier.IOThread
+import com.github.data.extensions.sort
 import com.github.data.model.Result
 import com.github.data.source.locale.GamesDatabase
 import com.github.data.source.locale.entity.GameDbEntity
@@ -34,6 +36,8 @@ class GamesRxRemoteMediator @Inject constructor(
   private val gamesDatabase: GamesDatabase,
   @IOThread private val ioThread: Scheduler
 ) : RxRemoteMediator<Int, GameDbEntity>() {
+
+  private val oldGames = mutableListOf<GameDbEntity>()
 
   override fun loadSingle(loadType: LoadType, state: PagingState<Int, GameDbEntity>): Single<MediatorResult> {
     return Single.just(loadType)
@@ -84,18 +88,22 @@ class GamesRxRemoteMediator @Inject constructor(
       Single.just(MediatorResult.Success(endOfPaginationReached = true))
     } else {
       gamesRemoteDS.getGames(page, state.config.pageSize, platform = PLAY_STATION_4)
-        .zipWith(gamesRemoteDS.getGames(page, state.config.pageSize, platform = XBOX_ONE)) { ps, xbox -> mergeListsIntoOne(ps, xbox) }
+        .zipWith(gamesRemoteDS.getGames(page, state.config.pageSize, platform = XBOX_ONE)) { ps, xbox -> mergeToCurrentData(ps, xbox, state.pages) }
         .map { insertToDatabase(page, loadType, it) }
         .map<MediatorResult> { endOfPagination -> MediatorResult.Success(endOfPaginationReached = endOfPagination) }
         .onErrorReturn { MediatorResult.Error(it) }
     }
   }
 
-  private fun mergeListsIntoOne(psGames: List<Result>, xboxGames: List<Result>): List<GameDbEntity> {
-    val mutablePSEntityGames = psGames.map { it.toDbEntity() }.toMutableList()
-    val xboxEntityGames = xboxGames.map { it.toDbEntity() }
-    mutablePSEntityGames.addAll(xboxEntityGames)
-    return mutablePSEntityGames.distinctBy { it.id }.filter { it.backgroundImage.isNotBlank() }.sortedByDescending { it.released }
+  private fun mergeToCurrentData(psGames: List<Result>, xboxGames: List<Result>, pages: List<Page<Int, GameDbEntity>>): List<GameDbEntity> {
+    val mergedGames = psGames.map { it.toDbEntity() }
+      .plus(xboxGames.map { it.toDbEntity() })
+      .filter { it.backgroundImage.isNotBlank() }
+      .distinctBy { it.id }
+      .sort()
+    oldGames.clear()
+    pages.forEach { oldGames.plus(it.data) }
+    return oldGames.plus(mergedGames).sort().distinctBy { it.id }
   }
 
   private fun insertToDatabase(page: Int, loadType: LoadType, games: List<GameDbEntity>): Boolean {
