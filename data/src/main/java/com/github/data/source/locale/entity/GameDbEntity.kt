@@ -9,8 +9,7 @@ import androidx.room.PrimaryKey
  */
 @Entity(tableName = "games")
 data class GameDbEntity(
-  @PrimaryKey(autoGenerate = true) val uuid: Long = 0,
-  val id: Long,
+  @PrimaryKey val id: Long,
   val slug: String,
   val name: String,
   val playtime: Long,
