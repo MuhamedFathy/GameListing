@@ -31,10 +31,10 @@ class GamesRepositoryImpl @Inject constructor(
   override fun getGames(): Flowable<PagingData<GameEntity>> {
     return Pager(
       config = PagingConfig(
-        pageSize = 40,
+        pageSize = 20,
         enablePlaceholders = true,
         prefetchDistance = 5,
-        initialLoadSize = 40
+        initialLoadSize = 20
       ),
       remoteMediator = gamesRxRemoteMediator,
       pagingSourceFactory = { database.gamesDao().selectAll() }

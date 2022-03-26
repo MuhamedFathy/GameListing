@@ -17,7 +17,7 @@ interface GamesDao {
 
   @Insert(onConflict = REPLACE) fun insertAll(games: List<GameDbEntity>)
 
-  @Query("SELECT * FROM games") fun selectAll(): PagingSource<Int, GameDbEntity>
+  @Query("SELECT * FROM games ORDER BY released DESC") fun selectAll(): PagingSource<Int, GameDbEntity>
 
   @Query("SELECT * FROM games WHERE id = :gameId") fun select(gameId: Long): GameDbEntity?
 

@@ -6,6 +6,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.github.gamelisting.databinding.ItemGameBinding
+import com.github.gamelisting.extension.clear
 import com.github.gamelisting.extension.load
 import com.github.gamelisting.features.main.GamesAdapter.GameViewHolder
 import com.github.gamelisting.features.main.viewmodel.uimodel.GameUIModel
@@ -21,6 +22,11 @@ class GamesAdapter @Inject constructor() : PagingDataAdapter<GameUIModel, GameVi
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder {
     return GameViewHolder(ItemGameBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+  }
+
+  override fun onViewRecycled(holder: GameViewHolder) {
+    holder.binding.itemImagePosterImageView.clear()
+    super.onViewRecycled(holder)
   }
 
   override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
@@ -42,12 +48,13 @@ class GamesAdapter @Inject constructor() : PagingDataAdapter<GameUIModel, GameVi
     }
   }
 
-  inner class GameViewHolder(private val binding: ItemGameBinding) : RecyclerView.ViewHolder(binding.root) {
+  inner class GameViewHolder(val binding: ItemGameBinding) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(game: GameUIModel) {
       with(game) {
         binding.itemImageNameTextView.text = name
         binding.itemImageRatingTextView.text = rating
+        binding.itemImageDateTextView.text = releaseDate
         binding.itemImagePosterImageView.load(poster)
         binding.root.setOnClickListener { itemCallback?.invoke(id) }
       }

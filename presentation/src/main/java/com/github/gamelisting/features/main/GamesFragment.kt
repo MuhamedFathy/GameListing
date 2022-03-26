@@ -66,6 +66,7 @@ class GamesFragment : Fragment() {
 
   private fun setupRecyclerViewWithAdapter() {
     checkPagingState()
+    binding.gamesRecyclerView.itemAnimator = null
     binding.gamesRecyclerView.adapter = gamesAdapter
     gamesAdapter.itemCallback = { gameId ->
       val itemDetailFragmentContainer: View? = view?.findViewById(R.id.item_detail_nav_container)

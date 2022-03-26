@@ -8,5 +8,6 @@ data class GameUIModel(
   val id: Long,
   val name: String,
   val poster: String,
-  val rating: String
+  val rating: String,
+  val releaseDate: String
 )
