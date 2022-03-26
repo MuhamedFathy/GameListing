@@ -12,6 +12,9 @@
         <entry key="app/src/main/res/layout/fragment_item_detail.xml" value="0.5052083333333334" />
         <entry key="app/src/main/res/layout/fragment_item_list.xml" value="0.3972222222222222" />
         <entry key="app/src/main/res/layout/item_list_content.xml" value="0.3972222222222222" />
+        <entry key="presentation/src/main/res/drawable/shape_rounded_corners.xml" value="0.2735" />
+        <entry key="presentation/src/main/res/drawable/shape_rounded_left_corners.xml" value="0.2735" />
+        <entry key="presentation/src/main/res/drawable/shape_rounded_right_corners.xml" value="0.2735" />
         <entry key="presentation/src/main/res/layout-sw600dp-land/fragment_game_details.xml" value="0.33151041666666664" />
         <entry key="presentation/src/main/res/layout-sw600dp/fragment_game_details.xml" value="0.21291666666666667" />
         <entry key="presentation/src/main/res/layout-sw600dp/fragment_games.xml" value="0.21291666666666667" />
@@ -19,6 +22,7 @@
         <entry key="presentation/src/main/res/layout/activity_main.xml" value="0.5192708333333333" />
         <entry key="presentation/src/main/res/layout/fragment_game_details.xml" value="0.25" />
         <entry key="presentation/src/main/res/layout/fragment_games.xml" value="0.2916666666666667" />
+        <entry key="presentation/src/main/res/layout/item_game.xml" value="0.20958333333333334" />
         <entry key="presentation/src/main/res/layout/item_game_details_pager.xml" value="0.5052083333333334" />
         <entry key="presentation/src/main/res/layout/item_game_rating.xml" value="0.5052083333333334" />
         <entry key="presentation/src/main/res/layout/layout_empty_view.xml" value="0.47314814814814815" />

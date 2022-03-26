@@ -11,5 +11,6 @@ fun GameEntity.toGameUIModel() = GameUIModel(
   id = id,
   name = name,
   poster = backgroundImage,
-  rating = rating.toString()
+  rating = rating.toString(),
+  releaseDate = released
 )
