@@ -9,7 +9,7 @@ import androidx.paging.PagingSource.LoadResult.Page
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxRemoteMediator
 import com.github.data.di.qualifier.IOThread
-import com.github.data.extensions.sort
+import com.github.data.extensions.sortDescending
 import com.github.data.model.Result
 import com.github.data.source.locale.GamesDatabase
 import com.github.data.source.locale.entity.GameDbEntity
@@ -100,10 +100,9 @@ class GamesRxRemoteMediator @Inject constructor(
       .plus(xboxGames.map { it.toDbEntity() })
       .filter { it.backgroundImage.isNotBlank() }
       .distinctBy { it.id }
-      .sort()
     oldGames.clear()
     pages.forEach { oldGames.plus(it.data) }
-    return oldGames.plus(mergedGames).sort().distinctBy { it.id }
+    return oldGames.plus(mergedGames).sortDescending().distinctBy { it.id }
   }
 
   private fun insertToDatabase(page: Int, loadType: LoadType, games: List<GameDbEntity>): Boolean {
