@@ -5,13 +5,13 @@ package com.github.data.extensions
  * Contact: muhamed.gendy@gmail.com
  */
 
-fun <T : Comparable<T>> List<T>.sort(): List<T> {
+fun <T : Comparable<T>> List<T>.sortDescending(): List<T> {
   val list = this
   if (list.count() <= 1) return list
   val middle = list.count().div(2)
   val left = list.subList(0, middle)
   val right = list.subList(middle, list.count())
-  return merge(left.sort(), right.sort())
+  return merge(left.sortDescending(), right.sortDescending())
 }
 
 private fun <T : Comparable<T>> merge(left: List<T>, right: List<T>): List<T> {
